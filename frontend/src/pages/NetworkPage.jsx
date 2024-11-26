@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import { UserPlus } from "lucide-react";
 import FriendRequest from "../components/FriendRequest";
 import UserCard from "../components/UserCard";
+import RecommendedUser from "../components/RecommendedUser";
 
 const NetworkPage = () => {
   //get the user query
@@ -24,18 +25,6 @@ const NetworkPage = () => {
     queryFn: () => axiosInstance.get("/connections"),
   });
 
-  //suggestion other users to current user
-  const { data: recommendedUsers } = useQuery({
-    queryKey: ["recommendedUsers"],
-    queryFn: async () => {
-      try {
-        const res = await axiosInstance.get("/users/suggestions");
-        return res.data;
-      } catch (err) {
-        toast.error(err.response.data.message || "Something went wrong");
-      }
-    },
-  });
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
       <div className="col-span-1 lg:col-span-1">
@@ -81,7 +70,6 @@ const NetworkPage = () => {
                     key={connection._id}
                     user={connection}
                     isConnection={true}
-                    recommendedUsers={recommendedUsers}
                   />
                 ))}
               </div>
