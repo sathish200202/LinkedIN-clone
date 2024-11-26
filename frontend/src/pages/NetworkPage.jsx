@@ -23,6 +23,19 @@ const NetworkPage = () => {
     queryKey: ["connections"],
     queryFn: () => axiosInstance.get("/connections"),
   });
+
+  //suggestion other users to current user
+  const { data: recommendedUsers } = useQuery({
+    queryKey: ["recommendedUsers"],
+    queryFn: async () => {
+      try {
+        const res = await axiosInstance.get("/users/suggestions");
+        return res.data;
+      } catch (err) {
+        toast.error(err.response.data.message || "Something went wrong");
+      }
+    },
+  });
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
       <div className="col-span-1 lg:col-span-1">
@@ -68,6 +81,7 @@ const NetworkPage = () => {
                     key={connection._id}
                     user={connection}
                     isConnection={true}
+                    recommendedUsers={recommendedUsers}
                   />
                 ))}
               </div>

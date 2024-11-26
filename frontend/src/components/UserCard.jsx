@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import RecommendedUser from "./RecommendedUser";
 
-function UserCard({ user, isConnection }) {
+function UserCard({ user, isConnection, recommendedUsers }) {
   return (
     <div className="bg-white rounded-lg shadow p-4 flex flex-col items-center transition-all hover:shadow-md">
       <Link
@@ -21,6 +22,18 @@ function UserCard({ user, isConnection }) {
       <button className="mt-4 bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors w-full">
         {isConnection ? "Connected" : "Connect"}
       </button>
+      {recommendedUsers?.length > 0 && (
+        <div className="col-span-1 lg:col-span-1 hidden lg:block">
+          <div className="bg-secondary rounded-lg shadow p-4">
+            <h2 className="font-semibold mb-4 text-primary">
+              People you may know
+            </h2>
+            {recommendedUsers?.map((user) => (
+              <RecommendedUser key={user._id} user={user} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
