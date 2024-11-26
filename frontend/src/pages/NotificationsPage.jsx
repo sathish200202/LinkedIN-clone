@@ -57,7 +57,12 @@ const NotificationsPage = () => {
       case "like":
         return (
           <span>
-            <strong>{notification.relatedUser.name}</strong> liked your post
+            <Link
+              to={`/profile/${notification.relatedUser?.username}`}
+              className="font-bold"
+            >
+              <strong>{notification.relatedUser.name}</strong> liked your post
+            </Link>
           </span>
         );
       case "comment":
